@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="neighborhood map--Udactiy project">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>neighborhood map</title>
+
+    <link rel="shortcut icon" href="images/favicon.png">
+    <link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="css/styles.css">
+  </head>
+  <body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+      <header class="mdl-layout__header"></header>
+      <div class="drawer mdl-layout__drawer">
+        <span class="mdl-layout-title">Map Demo</span>
+        <div class="search-box">
+          <div class="searchbox-input">
+            <div class="mdl-textfield mdl-js-textfield">
+              <input class="mdl-textfield__input" type="text" id="text-input" data-bind="value: query, valueUpdate:'keyup'">
+              <label class="mdl-textfield__label">请输入地名筛选</label>
+            </div>
+            <div class="searchbox-button-container">
+              <i class="material-icons">filter_list</i>
+            </div>
+          </div>
+          <div class="searchbox-back-container" data-bind="visible: locationDetails">
+            <a data-bind="click: backToList">返回至列表</a>
+          </div>
+        </div>
+        <nav class="mdl-navigation" data-bind="visible: !locationDetails()">
+          <ul class="list-unstyled" data-bind="foreach: filteredLocations">
+            <li class="mdl-navigation__link" data-bind="text: title, click: $parent.getPlacesDetails.bind()"></li>
+          </ul>
+        </nav>
+        <div class="details-container" data-bind="visible: locationDetails">
+          <div class="mdl-layout" data-bind="with: locationDetails()">
+            <header class="section-hero-header mdl-layout__header--scroll">
+              <div>
+                <span data-bind="text: name"></span>
+                <!-- ko if:wikiLink -->
+                <a target="_blank" data-bind="attr: { href: wikiLink }">
+                  <button class="mdl-button mdl-js-button mdl-button--raised">GO Wiki</button>
+                </a>
+                <!-- /ko -->
+              </div>
+            </header>
+            <main class="mdl-layout__content">
+              <div class="page-content">
+                <ul class="mdl-list">
+                  <!-- ko if: $data.formatted_address -->
+                  <li class="mdl-list__item">
+                    <span class="mdl-list__item-primary-content">
+                      <i class="material-icons mdl-list__item-icon">location_on</i>
+                      <span data-bind="text: formatted_address"></span>
+                    </span>
+                  </li>
+                  <!-- /ko -->
+                  <!-- ko if: $data.formatted_phone_number -->
+                  <li class="mdl-list__item">
+                    <span class="mdl-list__item-primary-content">
+                      <i class="material-icons mdl-list__item-icon">phone</i>
+                      <span data-bind="text: formatted_phone_number"></span>
+                    </span>
+                  </li>
+                  <!-- /ko -->
+                  <!-- ko if: $data.website -->
+                  <li class="mdl-list__item">
+                    <span class="mdl-list__item-primary-content">
+                      <i class="material-icons mdl-list__item-icon">link</i>
+                      <a target="_blank" data-bind="attr:{ href: website }">
+                        <span data-bind="text: website"></span>
+                      </a>
+                    </span>
+                  </li>
+                  <!-- /ko -->
+                </ul>
+                <!-- ko if: $data.photos -->
+                <div class="photo-container">
+                  <img alt="location_photo" data-bind="attr: { src: photos[0].getUrl({ maxHeight: 180, maxWidth: 310 }) }">
+                </div>
+                <!-- /ko -->
+                <div class="md-divider"></div>
+                <!-- ko if: $data.reviews -->
+                <div class="section-subheader">
+                  <h2 class="section-subheader-large-text">评价</h2>
+                </div>
+                <div class="section-rating">
+                  <h1 data-bind="text: rating"></h1>
+                  <span class="reviewchart-numreviews" data-bind="click: $parent.showDialog.bind($data, reviews)">
+                    有<span data-bind="text: reviews.length"></span>条评价
+                  </span>
+                </div>
+                <div class="md-divider"></div>
+                <!-- /ko -->
+              </div>
+            </main>
+          </div>
+        </div>
+      </div>
+      <main class="mdl-layout__content mdl-color--grey-100">
+        <div id="map"></div>
+      </main>
+    </div>
+    <dialog class="mdl-dialog">
+      <div class="mdl-dialog__content" data-bind="foreach: ratingDialogData">
+        <div class="review-container">
+          <div class="review-image-container">
+            <img alt="user-image" class="review-user-image" data-bind="attr: { src: profile_photo_url }">
+          </div>
+          <div class="review-content-header">
+            <div><b data-bind="text: author_name"></b></div>
+            <div class="review-publish-date" data-bind="text: relative_time_description"></div>
+           <div class="review-publish-rating">
+              <span data-bind="text: rating"></span>分
+           </div>
+          </div>
+          <div class="review-content">
+            <span class="review-text" data-bind="text: text"></span>
+          </div>
+          <div class="md-divider"></div>
+        </div>
+      </div>
+      <div class="mdl-dialog__actions">
+        <button type="button" class="mdl-button close" data-bind="click: closeDialog">关闭</button>
+      </div>
+    </dialog>
+
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/knockout/build/output/knockout-latest.js"></script>
+    <script src="node_modules/material-design-lite/material.min.js"></script>
+    <script src="js/app.js"></script>
+    <script async defer
+        src="http://maps.googleapis.com/maps/api/js?libraries=places,geometry,drawing&key=AIzaSyAjoxgxBu91MXhVg1o96omy3wTnh7EQV6g&callback=initApp"
+        onerror="errorHandle()"></script>
+  </body>
+</html>

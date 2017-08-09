@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="neighborhood map--Udactiy project">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <title>Nicky</title>
+
+  <!-- Add to homescreen for Chrome on Android -->
+  <meta name="mobile-web-app-capable" content="yes">
+
+  <!-- Add to homescreen for Safari on iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <link rel="shortcut icon" href="images/favicon.png">
+  <link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
+</head>
+<style>
+  html, body {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .icon {
+    margin: 10px 0 0 10px;
+  }
+  .ribbon {
+    width: 100%;
+    height: 80%;
+    background: url(images/wall_night_1.png) no-repeat;
+    background-size: cover;
+    -webkit-flex-shrink: 0;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+  }
+
+  .ribbon-text {
+    margin-top: 100px;
+    margin-bottom: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+
+  .nic-main {
+    width: 100%;
+    position: fixed;
+    bottom: 20px;
+    flex-shrink: 0;
+  }
+
+  .nic-header .mdl-layout__header-row {
+    padding-left: 40px;
+  }
+
+  .nic-container {
+    max-width: 1600px;
+    width: calc(100% - 16px);
+    margin: 0 auto;
+  }
+
+  .button-container {
+    text-align: center;
+    margin-bottom: 50px;
+  }
+
+  .button-container button {
+    background: white;
+  }
+
+  .nic-content {
+    border-radius: 2px;
+    padding: 30px 56px;
+  }
+
+  .nic-layout.is-small-screen .nic-content {
+    padding: 40px 28px;
+  }
+
+  .nic-tips {
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  .nic-tips p {
+    color: grey;
+    font-style: italic;
+    margin: 0;
+  }
+
+  @media (max-width: 841px) {
+    .icon img{
+      width: 150px;
+    }
+    .ribbon-text {
+      margin-top: 25%;
+    }
+    .ribbon-text img {
+      width: 80%;
+    }
+    .nic-main {
+      position: inherit;
+      bottom: 20px;
+    }
+    .nic-content {
+      padding: 20px;
+    }
+    .nic-content h3 {
+      font-size: 25px;
+    }
+  }
+
+</style>
+
+<body>
+  <div class="layout mdl-layout mdl-layout--fixed-header mdl-js-layout mdl-color--grey-100">
+    <div class="ribbon">
+      <div class="icon">
+        <img src="images/logo_name.png" alt="logo" width="200">
+      </div>
+      <div class="ribbon-text">
+        <img src="images/label.png" alt="logo" width="40%">
+      </div>
+      <main class="nic-main mdl-layout__content">
+        <div class="button-container">
+          <a href="map.html">
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+              GO !
+            </button>
+          </a>
+        </div>
+        <div class="nic-container mdl-grid">
+            <div class="mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
+            <div class="nic-content mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--8-col">
+              <h3>Udactiy Front-End Project: neighborhood map</h3>
+                <p>
+                  This project is part of Udacity Front-End Web Developer Nanodegree. It's intended to be a single page application featuring a map which contains a list of locations (at least 5) you would like to show. The app will show selected locations in Shanghai with Google Maps API, and get wikipedia link via jQuery ajax (if the location has the wikipedia link). Also, you can filter the location using input in siderbar. There are pinned locations in the map which users can click on and infomation will be showed in the siderbar instead of list.
+                </p>
+                <p>
+                  Via the project, You will learn how frameworks can decrease the time required developing an application and provide a number of utilities for you to use. Finally, you’ll implement third-party APIs that provide valuable data sets that can improve the quality of your application.
+                </p>
+            </div>
+          </div>
+        <div class="nic-tips">
+          <p> Tips: Google Map is not available in Chinese mainland. Check your network status before continuing. &#9786 </p>
+        </div>
+      </main>
+    </div>
+  </div>
+  <script src="node_modules/material-design-lite/material.min.js"></script>
+</body>
+
+</html>
